@@ -1,11 +1,13 @@
 function connected_components = rips(x, t)
 %returns connected components for a thickenong t
-
+size_x = size(x); 
 %calculates the distance matrix
 dist = [];
-    for y = transpose(x)
-        for z = transpose(x)
-            dist = [dist, sqrt(dot(z-y, z-y))];
+    for y = 1:size_x(1)
+        for z = 1:size_x(1)
+            if x(z,:) ~= x(y,:) 
+                dist = [dist, sqrt(dot(x(z,:) - x(y,:), x(z,:) - x(y,:)))];
+            end
         end
     end
     
@@ -23,7 +25,7 @@ end
 simplex = reshape(simplex,[length(x), length(x)]);
 
 %creates the list of vertices
-vertices = 1:1:length(x);
+vertices = 1:1:size_x(1);
 %we use control to check which vertices were already put in a connected
 %component
 control = [];
